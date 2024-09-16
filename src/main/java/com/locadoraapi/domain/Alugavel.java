@@ -1,8 +1,6 @@
 package com.locadoraapi.domain;
 
 public interface Alugavel {
-
-    void alugar();
-    void desalugar();
-    void estaDisponivel();
+    void alugar(Aluguel aluguel);
+    void desalugar(Aluguel aluguel);
 }

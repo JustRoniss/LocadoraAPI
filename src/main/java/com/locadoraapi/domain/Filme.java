@@ -7,6 +7,4 @@ public class Filme extends Titulo{
         super(nome, diretor, anoDeLancamento, valorDiaria);
     }
 
-    protected Filme() {
-    }
 }
