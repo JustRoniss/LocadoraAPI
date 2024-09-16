@@ -1,6 +1,8 @@
 package com.locadoraapi.controller;
 
 import com.locadoraapi.service.LocadoraService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,5 +15,10 @@ public class LocadoraController {
         this.locadoraService = locadoraService;
     }
 
+//    @GetMapping("/filmes/get/all")
+//    public ResponseEntity getAllFilmes(){
+//
+//        return ResponseEntity.ok();
+//    }
 
 }

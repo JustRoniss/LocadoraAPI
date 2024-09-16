@@ -1,10 +1,15 @@
 package com.locadoraapi.domain;
 
+
 import java.time.LocalDate;
 import java.util.UUID;
 
+
 public abstract class Titulo {
+
+
     private UUID id;
+
     private String nome;
     private String diretor;
     private LocalDate anoDeLancamento;
@@ -17,6 +22,9 @@ public abstract class Titulo {
         this.diretor = diretor;
         this.anoDeLancamento = anoDeLancamento;
         this.valorDiaria = valorDiaria;
+    }
+
+    protected Titulo() {
     }
 
     public UUID getId() {
