@@ -1,9 +1,21 @@
 package com.locadoraapi.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "tipo"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Filme.class, name = "FILME"),
+        @JsonSubTypes.Type(value = Serie.class, name = "SERIE")
+})
 
 public abstract class Titulo implements Alugavel{
 
@@ -17,10 +29,8 @@ public abstract class Titulo implements Alugavel{
     // Injetando gestor de alguel - DEPENDENCY INVERSION PRINCIPLE
     private GestorAluguel gestorAluguel;
 
-
-
-    public Titulo(String nome, String diretor, LocalDate anoDeLancamento, double valorDiaria, GestorAluguel gestorAluguel, Tipo tipo) {
-        this.id = UUID.randomUUID();
+    public Titulo(UUID id, String nome, String diretor, LocalDate anoDeLancamento, double valorDiaria, GestorAluguel gestorAluguel, Tipo tipo) {
+        this.id = id;
         this.nome = nome;
         this.diretor = diretor;
         this.anoDeLancamento = anoDeLancamento;
@@ -42,8 +52,13 @@ public abstract class Titulo implements Alugavel{
         this.gestorAluguel.devolver(aluguel);
     }
 
+
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -60,6 +75,10 @@ public abstract class Titulo implements Alugavel{
 
     public double getValorDiaria() {
         return valorDiaria;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
     }
 
 }

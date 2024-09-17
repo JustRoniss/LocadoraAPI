@@ -10,11 +10,13 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class TituloRowMapper implements RowMapper<Titulo> {
 
     @Override
     public Titulo mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+        UUID id = resultSet.getObject("id", UUID.class);
         String tipo = resultSet.getString("tipo");
         String nome = resultSet.getString("nome");
         String diretor = resultSet.getString("diretor");
@@ -22,9 +24,9 @@ public class TituloRowMapper implements RowMapper<Titulo> {
         double valorDiaria = resultSet.getDouble("valor_diaria");
 
         if(tipo.equals("FILME")){
-            return new Filme(nome, diretor, anoDeLancamento, valorDiaria, new GestorAluguel());
+            return new Filme(id, nome, diretor, anoDeLancamento, valorDiaria, new GestorAluguel());
         }else if(tipo.equals("SERIE")){
-            return new Serie(nome, diretor, anoDeLancamento, valorDiaria, new GestorAluguel());
+            return new Serie(id, nome, diretor, anoDeLancamento, valorDiaria, new GestorAluguel());
         }else {
             throw new IllegalArgumentException("Tipo desconhecido: " + tipo);
         }

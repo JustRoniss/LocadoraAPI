@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class TituloRepositoryImpl implements TituloRepository {
@@ -41,10 +42,11 @@ public class TituloRepositoryImpl implements TituloRepository {
 
     @Override
     public void save(Titulo titulo) {
-        String sql = "INSERT INTO titulo(nome, diretor, ano_de_lancamento, valor_diaria, tipo) " +
-                "VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO titulo(id, nome, diretor, ano_de_lancamento, valor_diaria, tipo) " +
+                "VALUES(?,?,?,?,?,?)";
 
         jdbcTemplate.update(sql,
+                titulo.getId(),
                 titulo.getNome(),
                 titulo.getDiretor(),
                 titulo.getAnoDeLancamento(),
@@ -67,8 +69,8 @@ public class TituloRepositoryImpl implements TituloRepository {
     }
 
     @Override
-    public void deleteById(Titulo titulo) {
+    public void deleteById(UUID tituloId) {
         String sql = "DELETE FROM titulo WHERE id = ?";
-        jdbcTemplate.update(sql, titulo.getId());
+        jdbcTemplate.update(sql, tituloId);
     }
 }

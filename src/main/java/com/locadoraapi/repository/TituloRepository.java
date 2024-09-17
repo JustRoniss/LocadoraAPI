@@ -4,6 +4,7 @@ package com.locadoraapi.repository;
 import com.locadoraapi.domain.Titulo;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface TituloRepository {
 
@@ -17,5 +18,5 @@ public interface TituloRepository {
 
     void update(Titulo titulo);
 
-    void deleteById(Titulo titulo);
+    void deleteById(UUID tituloId);
 }
