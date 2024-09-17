@@ -12,19 +12,21 @@ public abstract class Titulo implements Alugavel{
     private String diretor;
     private LocalDate anoDeLancamento;
     private double valorDiaria;
+    private Tipo tipo;
 
     // Injetando gestor de alguel - DEPENDENCY INVERSION PRINCIPLE
     private GestorAluguel gestorAluguel;
 
 
 
-    public Titulo(String nome, String diretor, LocalDate anoDeLancamento, double valorDiaria, GestorAluguel gestorAluguel) {
+    public Titulo(String nome, String diretor, LocalDate anoDeLancamento, double valorDiaria, GestorAluguel gestorAluguel, Tipo tipo) {
         this.id = UUID.randomUUID();
         this.nome = nome;
         this.diretor = diretor;
         this.anoDeLancamento = anoDeLancamento;
         this.valorDiaria = valorDiaria;
         this.gestorAluguel = gestorAluguel;
+        this.tipo = tipo;
 
     }
 
