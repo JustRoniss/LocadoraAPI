@@ -5,37 +5,40 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 
-public abstract class Titulo implements Alugavel {
+public abstract class Titulo implements Alugavel{
 
     private UUID id;
     private String nome;
     private String diretor;
     private LocalDate anoDeLancamento;
     private double valorDiaria;
-    private Aluguel aluguel;
-    private boolean disponivel;
 
-    public Titulo(String nome, String diretor, LocalDate anoDeLancamento, double valorDiaria) {
+    // Injetando gestor de alguel - DEPENDENCY INVERSION PRINCIPLE
+    private GestorAluguel gestorAluguel;
+
+
+
+    public Titulo(String nome, String diretor, LocalDate anoDeLancamento, double valorDiaria, GestorAluguel gestorAluguel) {
         this.id = UUID.randomUUID();
         this.nome = nome;
         this.diretor = diretor;
         this.anoDeLancamento = anoDeLancamento;
         this.valorDiaria = valorDiaria;
+        this.gestorAluguel = gestorAluguel;
+
+    }
+
+    //Implemento a classe alugavel pois titulo é um objeto alugavel, porém delego a responsabilidade de gerenciar aluguéis para outra classe - Single Responsability Principle
+
+    @Override
+    public void alugar(Aluguel aluguel) {
+        this.gestorAluguel.alugar(aluguel);
     }
 
     @Override
-    public void alugar(Aluguel aluguel){
-        if(disponivel){
-            this.aluguel = aluguel;
-            this.disponivel = false;
-        }
+    public void devolver(Aluguel aluguel) {
+        this.gestorAluguel.devolver(aluguel);
     }
-
-    @Override
-    public void desalugar(Aluguel aluguel){
-
-    }
-
 
     public UUID getId() {
         return id;
@@ -57,16 +60,5 @@ public abstract class Titulo implements Alugavel {
         return valorDiaria;
     }
 
-    public Aluguel getAluguel() {
-        return aluguel;
-    }
-
-    public boolean isDisponivel() {
-        return disponivel;
-    }
-
-    public void setDisponivel(boolean disponivel) {
-        this.disponivel = disponivel;
-    }
 }
 

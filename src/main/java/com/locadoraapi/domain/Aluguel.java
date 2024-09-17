@@ -9,17 +9,14 @@ public class Aluguel {
     private LocalDate dataEmprestimo;
     private LocalDate dataDevolucao;
     private double valorTotal;
-    private Titulo titulo;
-    private boolean ativo;
 
-    public Aluguel(String nomeCliente, LocalDate dataEmprestimo, LocalDate dataDevolucao, double valorTotal, Titulo titulo, boolean ativo) {
+
+    public Aluguel(String nomeCliente, LocalDate dataEmprestimo, LocalDate dataDevolucao, double valorTotal) {
         this.id = UUID.randomUUID();
         this.nomeCliente = nomeCliente;
         this.dataEmprestimo = dataEmprestimo;
         this.dataDevolucao = dataDevolucao;
         this.valorTotal = valorTotal;
-        this.titulo = titulo;
-        this.ativo = ativo;
     }
 
     public UUID getId() {
@@ -42,11 +39,4 @@ public class Aluguel {
         return valorTotal;
     }
 
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
 }
