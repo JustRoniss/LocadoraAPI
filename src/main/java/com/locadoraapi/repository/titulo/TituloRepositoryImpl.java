@@ -1,4 +1,4 @@
-package com.locadoraapi.repository;
+package com.locadoraapi.repository.titulo;
 
 import com.locadoraapi.domain.Filme;
 import com.locadoraapi.domain.Titulo;
@@ -25,7 +25,7 @@ public class TituloRepositoryImpl implements TituloRepository {
     }
 
     @Override
-    public Optional<Titulo> findById(Long id) {
+    public Optional<Titulo> findById(UUID id) {
         String sql = "SELECT * FROM titulo WHERE id = ?";
         return jdbcTemplate.query(sql, new TituloRowMapper(), id)
                 .stream()
@@ -42,8 +42,8 @@ public class TituloRepositoryImpl implements TituloRepository {
 
     @Override
     public void save(Titulo titulo) {
-        String sql = "INSERT INTO titulo(id, nome, diretor, ano_de_lancamento, valor_diaria, tipo) " +
-                "VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO titulo(id, nome, diretor, ano_de_lancamento, valor_diaria, tipo, disponivel) " +
+                "VALUES(?,?,?,?,?,?, ?)";
 
         jdbcTemplate.update(sql,
                 titulo.getId(),
@@ -51,20 +51,23 @@ public class TituloRepositoryImpl implements TituloRepository {
                 titulo.getDiretor(),
                 titulo.getAnoDeLancamento(),
                 titulo.getValorDiaria(),
-                titulo instanceof Filme ? "FILME" :  "SERIE"
+                titulo instanceof Filme ? "FILME" :  "SERIE",
+                titulo.isDisponivel()
         );
     }
 
     @Override
     public void update(Titulo titulo) {
-        String sql = "UPDATE titulo SET nome = ?, diretor = ?, ano_de_lancamento = ?, valor_diaria = ?, tipo = ? WHERE id = ?";
+        String sql = "UPDATE titulo SET nome = ?, diretor = ?, ano_de_lancamento = ?, valor_diaria = ?, tipo = ?, aluguel_id = ? WHERE id = ?";
 
         jdbcTemplate.update(sql,
                 titulo.getNome(),
                 titulo.getDiretor(),
                 titulo.getAnoDeLancamento(),
                 titulo.getValorDiaria(),
-                titulo instanceof Filme ? "FILME" :  "SERIE"
+                titulo instanceof Filme ? "FILME" :  "SERIE",
+                titulo.getAluguelId(),
+                titulo.getId()
         );
     }
 

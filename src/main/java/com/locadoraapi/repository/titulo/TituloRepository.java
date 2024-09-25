@@ -1,4 +1,4 @@
-package com.locadoraapi.repository;
+package com.locadoraapi.repository.titulo;
 
 
 import com.locadoraapi.domain.Titulo;
@@ -10,7 +10,7 @@ public interface TituloRepository {
 
     List<Titulo> findAll();
 
-    Optional<Titulo> findById(Long id);
+    Optional<Titulo> findById(UUID id);
 
     Optional<Titulo> findByNome(String nome);
 

@@ -1,37 +1,31 @@
 package com.locadoraapi.domain;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class GestorAluguel {
 
-    private boolean disponivel = true;
-    private Aluguel aluguel;
-
-    public void alugar(Aluguel aluguel) {
-        if(this.disponivel) {
-            this.aluguel = aluguel;
-            this.disponivel = false;
-        }else{
-            throw new IllegalStateException("Este título já está alugado.");
-        }
+    public void alugar(Aluguel aluguel, Titulo titulo) {
+        titulo.setAluguel(aluguel.getId());
+        aluguel.setTitulo(titulo.getId());
+        titulo.setDisponivel(false);
+        aluguel.setValorTotal(
+                calcularTotal(
+                        aluguel.getDataEmprestimo(),
+                        aluguel.getDataDevolucao(),
+                        titulo.getValorDiaria()
+                )
+        );
     }
 
-    public void devolver(Aluguel aluguel) {
-        if(!this.disponivel) {
-            this.aluguel = null;
-            this.disponivel = true;
-        }else {
-            throw new IllegalStateException("Este título não está alugado.");
-        }
+    public void devolver(Aluguel aluguel, Titulo titulo) {
+        titulo.setAluguel(null);
+        aluguel.setTitulo(null);
+        titulo.setDisponivel(true);
     }
 
-    public boolean isDisponivel() {
-        return disponivel;
-    }
-
-    public Aluguel getAluguel() {
-        return aluguel;
-    }
-
-    public void setAluguel(Aluguel aluguel) {
-        this.aluguel = aluguel;
+    private double calcularTotal(LocalDate dataLocacao, LocalDate dataDevolucao, double valorDiaria) {
+        long qtdDias = ChronoUnit.DAYS.between(dataLocacao, dataDevolucao);
+        return qtdDias * valorDiaria;
     }
 }

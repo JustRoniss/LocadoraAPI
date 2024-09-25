@@ -1,9 +1,6 @@
-package com.locadoraapi.repository;
+package com.locadoraapi.repository.titulo;
 
-import com.locadoraapi.domain.Filme;
-import com.locadoraapi.domain.GestorAluguel;
-import com.locadoraapi.domain.Serie;
-import com.locadoraapi.domain.Titulo;
+import com.locadoraapi.domain.*;
 import org.springframework.jdbc.core.RowMapper;
 
 
@@ -22,11 +19,13 @@ public class TituloRowMapper implements RowMapper<Titulo> {
         String diretor = resultSet.getString("diretor");
         LocalDate anoDeLancamento = resultSet.getObject("ano_de_lancamento", LocalDate.class);
         double valorDiaria = resultSet.getDouble("valor_diaria");
+        boolean disponivel = resultSet.getBoolean("disponivel");
+        UUID aluguelId  = resultSet.getObject("aluguel_id", UUID.class);
 
         if(tipo.equals("FILME")){
-            return new Filme(id, nome, diretor, anoDeLancamento, valorDiaria, new GestorAluguel());
+            return new Filme(id, nome, diretor, anoDeLancamento, valorDiaria, new GestorAluguel(), disponivel, aluguelId);
         }else if(tipo.equals("SERIE")){
-            return new Serie(id, nome, diretor, anoDeLancamento, valorDiaria, new GestorAluguel());
+            return new Serie(id, nome, diretor, anoDeLancamento, valorDiaria, new GestorAluguel(), disponivel, aluguelId);
         }else {
             throw new IllegalArgumentException("Tipo desconhecido: " + tipo);
         }

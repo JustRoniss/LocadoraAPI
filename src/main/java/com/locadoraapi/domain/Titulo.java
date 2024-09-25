@@ -25,11 +25,14 @@ public abstract class Titulo implements Alugavel{
     private LocalDate anoDeLancamento;
     private double valorDiaria;
     private Tipo tipo;
+    private boolean disponivel;
+    private UUID aluguelId;
+
 
     // Injetando gestor de alguel - DEPENDENCY INVERSION PRINCIPLE
     private GestorAluguel gestorAluguel;
 
-    public Titulo(UUID id, String nome, String diretor, LocalDate anoDeLancamento, double valorDiaria, GestorAluguel gestorAluguel, Tipo tipo) {
+    public Titulo(UUID id, String nome, String diretor, LocalDate anoDeLancamento, double valorDiaria, GestorAluguel gestorAluguel, Tipo tipo, boolean disponivel, UUID aluguelId) {
         this.id = id;
         this.nome = nome;
         this.diretor = diretor;
@@ -37,6 +40,8 @@ public abstract class Titulo implements Alugavel{
         this.valorDiaria = valorDiaria;
         this.gestorAluguel = gestorAluguel;
         this.tipo = tipo;
+        this.disponivel = disponivel;
+        this.aluguelId = null;
 
     }
 
@@ -44,12 +49,12 @@ public abstract class Titulo implements Alugavel{
 
     @Override
     public void alugar(Aluguel aluguel) {
-        this.gestorAluguel.alugar(aluguel);
+        this.gestorAluguel.alugar(aluguel, this);
     }
 
     @Override
     public void devolver(Aluguel aluguel) {
-        this.gestorAluguel.devolver(aluguel);
+        this.gestorAluguel.devolver(aluguel, this);
     }
 
 
@@ -81,5 +86,20 @@ public abstract class Titulo implements Alugavel{
         return tipo;
     }
 
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+
+    public UUID getAluguelId() {
+        return aluguelId;
+    }
+
+    public void setAluguel(UUID aluguelId) {
+        this.aluguelId = aluguelId;
+    }
 }
 

@@ -9,14 +9,15 @@ public class Aluguel {
     private LocalDate dataEmprestimo;
     private LocalDate dataDevolucao;
     private double valorTotal;
+    private UUID tituloId;
 
-
-    public Aluguel(String nomeCliente, LocalDate dataEmprestimo, LocalDate dataDevolucao, double valorTotal) {
+    public Aluguel(String nomeCliente, LocalDate dataEmprestimo, LocalDate dataDevolucao, double valorTotal, UUID tituloId) {
         this.id = UUID.randomUUID();
         this.nomeCliente = nomeCliente;
         this.dataEmprestimo = dataEmprestimo;
         this.dataDevolucao = dataDevolucao;
         this.valorTotal = valorTotal;
+        this.tituloId = tituloId;
     }
 
     public UUID getId() {
@@ -35,8 +36,27 @@ public class Aluguel {
         return dataDevolucao;
     }
 
+    public void setDataEmprestimo(LocalDate dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public void setDataDevolucao(LocalDate dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }
+
+    public UUID getTituloId() {
+        return tituloId;
+    }
+
+    public void setTitulo(UUID tituloId) {
+        this.tituloId = tituloId;
+    }
+
     public double getValorTotal() {
         return valorTotal;
     }
 
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
 }
